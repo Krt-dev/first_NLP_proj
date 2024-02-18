@@ -1,4 +1,3 @@
-import re
 
 def tokenize_text(text):
     words = []
@@ -58,11 +57,20 @@ def trigram(text):
     return trigrams
 
 def regex(text):
+    sentences = []
+    current_sentence = []
+    for char in text:
+        if char in ['.', '?', '!']:
+            if current_sentence:
+                sentences.append(''.join(current_sentence).split())
+                current_sentence = []
+        else:
+            current_sentence.append(char)
+    if current_sentence:
+        sentences.append(''.join(current_sentence).split())
     
-    sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', text)
-    regex_sentences = [sentence.split() for sentence in sentences]
-    
-    return regex_sentences
+    return sentences
+
     
 
     
@@ -74,7 +82,7 @@ def main():
     while True:
         text = input("Enter a sentence or paragraph: ")
     
-        print("1.) Tokenized")
+        print("1.) Exit")
         print("2.) White Space")
         print("3.) Bigram")
         print("4.) Trigram")
@@ -83,11 +91,7 @@ def main():
         choice = input("\nWhat would you like to do?")
         choiceInt = int(choice)
         if choiceInt == 1:
-            tokenized_text = tokenize_text(text)
-            print("\nResult of Tokenization:")
-            for sentence in tokenized_text:
-                print(sentence)
-            #break
+            exit()
         elif choiceInt == 2:
             whitespaced = white_space_text(text)
             print("\nResult of White space:")
