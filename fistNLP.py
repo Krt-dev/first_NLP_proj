@@ -1,3 +1,5 @@
+import re
+
 
 def tokenize_text(text):
     words = []
@@ -57,21 +59,15 @@ def trigram(text):
     return trigrams
 
 def regex(text):
-    sentences = []
-    current_sentence = []
-    for char in text:
-        if char in ['.', '?', '!']:
-            if current_sentence:
-                sentences.append(''.join(current_sentence).split())
-                current_sentence = []
-        else:
-            current_sentence.append(char)
-    if current_sentence:
-        sentences.append(''.join(current_sentence).split())
     
-    return sentences
-
+    pattern = r'[\w\']+'
     
+  
+    sentences = re.findall(pattern, text)
+    
+    tokenized_sentences = [sentence.split() for sentence in sentences]
+    
+    return tokenized_sentences
 
     
 
@@ -113,8 +109,9 @@ def main():
         elif choiceInt == 5:
             regex_word = regex(text)
             print("\nResult of Regex:")
-            for sentence in regex_word:
-                print(sentence)
+            print(regex_word)
+            # for sentence in regex_word:
+            #     print(sentence)
             #break
 
         
